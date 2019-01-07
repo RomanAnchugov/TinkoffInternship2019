@@ -24,12 +24,15 @@ class NewsListRepository private constructor() {
         newsDao = database.newsDao()
     }
 
+    fun getNewsList(): Observable<List<SpecificNewsModel>>{
+        return getNewsListFromDb()
+    }
+
     fun getNewsListFromApi(): Observable<NewsListModel>{
         return newsService.newsList().doOnNext{
             Timber.tag("RX").i("Fetch news from API")
-            saveNewsInDb(it)
+            saveNewsInDb(it.newsList)
         }
-
     }
 
     fun getNewsListFromDb(): Observable<List<SpecificNewsModel>>{
@@ -41,8 +44,7 @@ class NewsListRepository private constructor() {
     }
 
     @SuppressLint("CheckResult")
-    fun saveNewsInDb(newsList:NewsListModel){
-        val news = newsList.newsList
+    fun saveNewsInDb(news : List<SpecificNewsModel>){
         Observable.fromCallable{newsDao.insertAll(news)}
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())

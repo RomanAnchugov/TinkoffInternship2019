@@ -21,6 +21,12 @@ class ArchitectureModule(val application: Application) {
 
     @Provides
     @Singleton
+    fun providesApplication():Application{
+        return application
+    }
+
+    @Provides
+    @Singleton
     fun providesNewsListRepository(): NewsListRepository{
         return NewsListRepository.getInstance()
     }

@@ -7,8 +7,6 @@ import romananchugov.ru.tinkoffinternship.di.DaggerAppComponent
 import timber.log.Timber
 
 class MyApplication : Application() {
-    private var application: Application = this
-
     init {
         appComponent = DaggerAppComponent.builder().architectureModule(ArchitectureModule(this)).build()
     }

@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import romananchugov.ru.tinkoffinternship.MyApplication
 import romananchugov.ru.tinkoffinternship.R
 import romananchugov.ru.tinkoffinternship.viewmodel.NewsListViewModel
 import romananchugov.ru.tinkoffinternship.viewmodel.NewsListViewModelFactory
+import timber.log.Timber
 import javax.inject.Inject
 
 class NewsListFragment : Fragment() {
@@ -32,7 +34,12 @@ class NewsListFragment : Fragment() {
         viewModel = ViewModelProviders.of(this, factory)
             .get(NewsListViewModel::class.java)
 
+        viewModel.newsListLiveData.observe(this, Observer {
+            Timber.tag("RX").i("Data changed ${it.size}")
+        })
+
         viewModel.onCreateView()
+
 
         return inflater.inflate(R.layout.fragment_news_list, container, false)
     }
