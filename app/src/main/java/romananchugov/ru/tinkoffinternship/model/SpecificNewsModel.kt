@@ -16,5 +16,4 @@ class SpecificNewsModel {
     @ColumnInfo(name = "text")
     @SerializedName("text")
     lateinit var text: String
-
 }

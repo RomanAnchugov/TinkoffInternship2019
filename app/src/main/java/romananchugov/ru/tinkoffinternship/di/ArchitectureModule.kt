@@ -15,7 +15,7 @@ class ArchitectureModule(val application: Application) {
 
     @Provides
     @Singleton
-    fun providesApplicationCotext(): Context {
+    fun providesApplicationContext(): Context {
         return application.applicationContext
     }
 

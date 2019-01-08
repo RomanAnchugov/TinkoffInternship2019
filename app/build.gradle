@@ -68,4 +68,9 @@ dependencies {
     //Rx support for paging
     implementation "androidx.paging:paging-rxjava2-ktx:$paging_version"
 
+    //THIRD
+
+    //RecyclerRefreshLayout
+    implementation 'com.dinuscxj:recyclerrefreshlayout:2.0.5'
+
 }

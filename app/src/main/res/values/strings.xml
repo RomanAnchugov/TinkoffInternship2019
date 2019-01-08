@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">TinkoffInternship</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_data_snackbar_message">Нет записей</string>
+    <string name="no_data_snackbar_action">Попробовать Снова</string>
+    <string name="error_snackbar_message">Произошла ошибка</string>
+    <string name="error_snackbar_action">Попробовать Снова</string>
 </resources>
