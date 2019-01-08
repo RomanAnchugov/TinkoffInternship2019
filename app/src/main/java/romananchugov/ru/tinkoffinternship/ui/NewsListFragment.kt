@@ -70,6 +70,7 @@ class NewsListFragment : Fragment() {
                 view.news_list_refresher.setRefreshing(false)
                 view.indefiniteSnackbar(R.string.error_snackbar_message, R.string.error_snackbar_action)
                 {
+                    view.news_list_refresher.setRefreshing(true)
                     viewModel.onRefresh()
                 }
             }
