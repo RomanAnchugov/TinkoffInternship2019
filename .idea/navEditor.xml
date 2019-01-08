@@ -19,7 +19,7 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_newsListFragment_to_specificNewsFragment">
+                            <entry key="action_specificNewsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

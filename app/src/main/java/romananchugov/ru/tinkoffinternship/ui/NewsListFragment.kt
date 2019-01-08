@@ -49,8 +49,6 @@ class NewsListFragment : Fragment() {
             viewModel.onRefresh()
         }
 
-
-
         viewModel.newsListLiveData.observe(this, Observer {
             newsListAdapter.newsList = it
             view.news_list_refresher.setRefreshing(false)

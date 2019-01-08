@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.view_news_list_item.view.*
-import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import romananchugov.ru.tinkoffinternship.MyApplication
 import romananchugov.ru.tinkoffinternship.R
@@ -48,9 +47,13 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.textView.onClick {
-            holder.textView.snackbar("Clicked")
-            holder.textView.findNavController().navigate(R.id.action_newsListFragment_to_specificNewsFragment)
+
+            val specificNewsAction = NewsListFragmentDirections
+                .action_specificNewsFragment().setNews_id(newsList[position].id)
+
+            holder.textView.findNavController().navigate(specificNewsAction)
         }
+
         val text: Spanned = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(newsList[position].text, Html.FROM_HTML_MODE_COMPACT)
         }else{

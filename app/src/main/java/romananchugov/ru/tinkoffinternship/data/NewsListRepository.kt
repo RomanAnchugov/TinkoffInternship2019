@@ -5,6 +5,7 @@ import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import romananchugov.ru.tinkoffinternship.MyApplication
 import romananchugov.ru.tinkoffinternship.model.NewsListModel
+import romananchugov.ru.tinkoffinternship.model.SpecificNewsContentModel
 import romananchugov.ru.tinkoffinternship.model.SpecificNewsModel
 import romananchugov.ru.tinkoffinternship.network.NewsService
 import timber.log.Timber
@@ -24,12 +25,8 @@ class NewsListRepository private constructor() {
         newsDao = database.newsDao()
     }
 
-    fun getNewsList(): Observable<List<SpecificNewsModel>>{
-        return getNewsListFromDb()
-    }
-
     fun getNewsListFromApi(): Observable<NewsListModel>{
-        return newsService.newsList().doOnNext{
+        return newsService.getNewsList().doOnNext{
             Timber.tag("RX").i("Fetch news from API")
             saveNewsInDb(it.newsList)
         }
@@ -52,6 +49,12 @@ class NewsListRepository private constructor() {
                 Timber.tag("RX").i("news inserted ${news.size}")
             }
 
+    }
+
+    fun getSpecificNewsContentFromApi(id:Int):Observable<SpecificNewsContentModel>{
+        return newsService.getSpecificNews(id).doOnNext{
+            Timber.tag("RX").i("Fetch news content from API")
+        }
     }
 
     companion object {
