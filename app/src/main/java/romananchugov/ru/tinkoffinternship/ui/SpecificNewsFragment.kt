@@ -26,6 +26,8 @@ class SpecificNewsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         MyApplication.appComponent?.inject(this)
         super.onCreate(savedInstanceState)
+        (activity as MainActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as MainActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
     @SuppressLint("CheckResult")
