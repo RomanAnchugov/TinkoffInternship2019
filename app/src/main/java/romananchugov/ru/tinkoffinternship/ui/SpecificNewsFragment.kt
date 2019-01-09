@@ -49,7 +49,6 @@ class SpecificNewsFragment : Fragment() {
         })
 
         viewModel.error.observe(this, Observer {
-
             if(it){
                 view.indefiniteSnackbar(R.string.error_snackbar_message, R.string.error_snackbar_action)
                 {
@@ -57,8 +56,6 @@ class SpecificNewsFragment : Fragment() {
                 }
             }
         })
-
-        //view.indefiniteSnackbar("Id is: $newsId")
 
         return view
     }

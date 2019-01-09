@@ -7,9 +7,9 @@
     <fragment android:id="@+id/newsListFragment" android:name="romananchugov.ru.tinkoffinternship.ui.NewsListFragment"
               android:label="fragment_news_list" tools:layout="@layout/fragment_news_list">
         <action android:id="@+id/action_specificNewsFragment"
-                app:destination="@id/specificNewsFragment" app:enterAnim="@anim/nav_default_enter_anim"
-                app:exitAnim="@anim/nav_default_exit_anim" app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-                app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+                app:destination="@id/specificNewsFragment" app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left" app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment android:id="@+id/specificNewsFragment"
               android:name="romananchugov.ru.tinkoffinternship.ui.SpecificNewsFragment"

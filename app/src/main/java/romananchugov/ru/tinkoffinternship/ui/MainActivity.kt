@@ -8,9 +8,6 @@ import romananchugov.ru.tinkoffinternship.R
 
 class MainActivity : AppCompatActivity() {
     /*TODO:
-        1. Styles for views(colors, dimens)
-        2. Custom animation for fragment navigation
-        3. Store specific news in DB
         4. Work with error
 
         5. README

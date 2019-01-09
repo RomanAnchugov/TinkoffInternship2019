@@ -47,7 +47,7 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.newsHeaderTv.onClick {
+        holder.newsCv.onClick {
 
             val specificNewsAction = NewsListFragmentDirections
                 .action_specificNewsFragment().setNews_id(newsList[position].id)
@@ -64,6 +64,7 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val newsCv = view.news_cv!!
         val newsHeaderTv = view.news_header_tv!!
         val newsPublicDateTv = view.news_publication_date_tv!!
     }
