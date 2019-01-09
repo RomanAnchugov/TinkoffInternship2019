@@ -1,4 +1,4 @@
-package romananchugov.ru.tinkoffinternship.di
+package romananchugov.ru.tinkoffinternship.dagger
 
 import android.app.Application
 import android.content.Context
@@ -8,6 +8,7 @@ import dagger.Provides
 import romananchugov.ru.tinkoffinternship.data.AppDatabase
 import romananchugov.ru.tinkoffinternship.data.NewsListRepository
 import romananchugov.ru.tinkoffinternship.viewmodel.NewsListViewModelFactory
+import romananchugov.ru.tinkoffinternship.viewmodel.SpecificNewsContentViewModelFactory
 import javax.inject.Singleton
 
 @Module
@@ -36,6 +37,13 @@ class ArchitectureModule(val application: Application) {
     fun providesNewsListViewModelFactory(): NewsListViewModelFactory{
         val repository = providesNewsListRepository()
         return NewsListViewModelFactory(repository = repository)
+    }
+
+    @Provides
+    @Singleton
+    fun providesSpecificNewsContentViewModelFactory(): SpecificNewsContentViewModelFactory{
+        val repository = providesNewsListRepository()
+        return SpecificNewsContentViewModelFactory(repository = repository)
     }
 
     @Provides

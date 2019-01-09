@@ -1,4 +1,4 @@
-package romananchugov.ru.tinkoffinternship.di
+package romananchugov.ru.tinkoffinternship.dagger
 
 import dagger.Component
 import romananchugov.ru.tinkoffinternship.data.NewsListRepository

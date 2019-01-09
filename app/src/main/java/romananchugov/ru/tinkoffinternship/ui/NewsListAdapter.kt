@@ -1,9 +1,6 @@
 package romananchugov.ru.tinkoffinternship.ui
 
 import android.content.Context
-import android.os.Build
-import android.text.Html
-import android.text.Spanned
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +11,7 @@ import org.jetbrains.anko.sdk27.coroutines.onClick
 import romananchugov.ru.tinkoffinternship.MyApplication
 import romananchugov.ru.tinkoffinternship.R
 import romananchugov.ru.tinkoffinternship.model.SpecificNewsModel
+import romananchugov.ru.tinkoffinternship.utils.Constants
 import javax.inject.Inject
 
 class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
@@ -54,12 +52,7 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
             holder.textView.findNavController().navigate(specificNewsAction)
         }
 
-        val text: Spanned = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(newsList[position].text, Html.FROM_HTML_MODE_COMPACT)
-        }else{
-            Html.fromHtml(newsList[position].text)
-        }
-        holder.textView.text = text
+        holder.textView.text = Constants.validateHtmlText(newsList[position].text)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -6,19 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.design.indefiniteSnackbar
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.fragment_specific_news.view.*
 import romananchugov.ru.tinkoffinternship.MyApplication
 import romananchugov.ru.tinkoffinternship.R
-import romananchugov.ru.tinkoffinternship.data.NewsListRepository
-import timber.log.Timber
+import romananchugov.ru.tinkoffinternship.utils.Constants
+import romananchugov.ru.tinkoffinternship.viewmodel.SpecificNewsContentViewModel
+import romananchugov.ru.tinkoffinternship.viewmodel.SpecificNewsContentViewModelFactory
 import javax.inject.Inject
 
 class SpecificNewsFragment : Fragment() {
 
     @Inject
-    lateinit var repository: NewsListRepository
+    lateinit var factory: SpecificNewsContentViewModelFactory
+
+    lateinit var viewModel: SpecificNewsContentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         MyApplication.appComponent?.inject(this)
@@ -32,20 +35,27 @@ class SpecificNewsFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_specific_news, container, false)
-
         val newsId = SpecificNewsFragmentArgs.fromBundle(arguments).news_id
 
-        repository.getSpecificNewsContentFromApi(newsId)
-            .observeOn(Schedulers.io())
-            .subscribeOn(Schedulers.io())
-            .subscribeBy (
-                onNext = {Timber.tag("RX").i("OnNext, load content ${it.payload.title.text}")},
-                onComplete = {Timber.tag("RX").i("Loaded content")},
-                onError = {Timber.tag("RX").i("Some error occurred, during loading content ${it.message}")}
-            )
+        viewModel = ViewModelProviders.of(this, factory).get(SpecificNewsContentViewModel::class.java)
+        viewModel.onCreate(newsId)
 
-        view.indefiniteSnackbar("Id is: $newsId")
+        viewModel.contentModel.observe(this, Observer {
+            view.specific_news_text_tv.text = Constants.validateHtmlText(it.payload.title.text)
+            view.specific_news_content_tv.text = Constants.validateHtmlText(it.payload.content)
+        })
+
+
+//        //TODO: UI
+
+
+        //view.indefiniteSnackbar("Id is: $newsId")
 
         return view
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.onStop()
     }
 }

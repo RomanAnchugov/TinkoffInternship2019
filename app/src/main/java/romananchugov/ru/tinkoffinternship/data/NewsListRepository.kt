@@ -2,6 +2,7 @@ package romananchugov.ru.tinkoffinternship.data
 
 import android.annotation.SuppressLint
 import io.reactivex.Observable
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import romananchugov.ru.tinkoffinternship.MyApplication
 import romananchugov.ru.tinkoffinternship.model.NewsListModel
@@ -25,42 +26,43 @@ class NewsListRepository private constructor() {
         newsDao = database.newsDao()
     }
 
-    fun getNewsListFromApi(): Observable<NewsListModel>{
-        return newsService.getNewsList().doOnNext{
-            Timber.tag("RX").i("Fetch news from API")
-            saveNewsInDb(it.newsList)
-        }
+    fun getNewsListFromApi(): Observable<NewsListModel> {
+        return newsService.getNewsList()
+            .doOnNext {
+                Timber.tag("RX").i("Fetch news from API")
+                saveNewsInDb(it.newsList)
+            }
     }
 
-    fun getNewsListFromDb(): Observable<List<SpecificNewsModel>>{
+    fun getNewsListFromDb(): Observable<List<SpecificNewsModel>> {
         return newsDao.getNews()
             .toObservable()
-            .doOnNext{
+            .doOnNext {
                 Timber.tag("RX").i("Fetch news from DB")
             }
     }
 
     @SuppressLint("CheckResult")
-    fun saveNewsInDb(news : List<SpecificNewsModel>){
-        Observable.fromCallable{newsDao.insertAll(news)}
+    fun saveNewsInDb(news: List<SpecificNewsModel>) {
+        Observable.fromCallable { newsDao.insertAll(news) }
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
-            .subscribe{
-                Timber.tag("RX").i("news inserted ${news.size}")
-            }
+            .subscribeBy(
+                onNext = { Timber.tag("RX").i("OnNext Save news in DB ${news.size}") },
+                onComplete = { Timber.tag("RX").i("OnComplete Save news in DB") },
+                onError = { Timber.tag("RX").i("OnError Save news in DB ${it.message}") }
+            )
 
     }
 
-    fun getSpecificNewsContentFromApi(id:Int):Observable<SpecificNewsContentModel>{
-        return newsService.getSpecificNews(id).doOnNext{
-            Timber.tag("RX").i("Fetch news content from API")
-        }
+    fun getSpecificNewsContentFromApi(id: Int): Observable<SpecificNewsContentModel> {
+        return newsService.getSpecificNews(id)
     }
 
     companion object {
-        private var instance:NewsListRepository? = null
+        private var instance: NewsListRepository? = null
 
-        fun getInstance(): NewsListRepository{
+        fun getInstance(): NewsListRepository {
             return instance ?: NewsListRepository().also {
                 instance = it
             }

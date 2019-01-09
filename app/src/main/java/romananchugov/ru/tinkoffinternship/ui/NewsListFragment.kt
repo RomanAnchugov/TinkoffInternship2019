@@ -40,7 +40,6 @@ class NewsListFragment : Fragment() {
             .get(NewsListViewModel::class.java)
 
         view.news_list_rv.adapter = newsListAdapter
-
         view.news_list_rv.layoutManager = LinearLayoutManager(this.context)
 
         view.news_list_refresher.setRefreshing(true)
@@ -54,8 +53,7 @@ class NewsListFragment : Fragment() {
             view.news_list_refresher.setRefreshing(false)
 
             if (it.isEmpty()) {
-                view
-                    .indefiniteSnackbar(R.string.no_data_snackbar_message, R.string.no_data_snackbar_action)
+                view.indefiniteSnackbar(R.string.no_data_snackbar_message, R.string.no_data_snackbar_action)
                     {
                         view.news_list_refresher.setRefreshing(true)
                         viewModel.onRefresh()
@@ -76,5 +74,10 @@ class NewsListFragment : Fragment() {
 
         viewModel.onCreateView()
         return view
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.onStop()
     }
 }
