@@ -12,7 +12,10 @@ import romananchugov.ru.tinkoffinternship.MyApplication
 import romananchugov.ru.tinkoffinternship.R
 import romananchugov.ru.tinkoffinternship.model.SpecificNewsModel
 import romananchugov.ru.tinkoffinternship.utils.Constants
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
+
 
 class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
 
@@ -44,18 +47,24 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.textView.onClick {
+        holder.newsHeaderTv.onClick {
 
             val specificNewsAction = NewsListFragmentDirections
                 .action_specificNewsFragment().setNews_id(newsList[position].id)
 
-            holder.textView.findNavController().navigate(specificNewsAction)
+            holder.newsHeaderTv.findNavController().navigate(specificNewsAction)
         }
 
-        holder.textView.text = Constants.validateHtmlText(newsList[position].text)
+        holder.newsHeaderTv.text = Constants.validateHtmlText(newsList[position].text)
+
+        val formatter = SimpleDateFormat.getDateInstance()
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = newsList[position].publicationDate.milliseconds
+        holder.newsPublicDateTv.text = formatter.format(calendar.time)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView = view.news_header_tv
+        val newsHeaderTv = view.news_header_tv!!
+        val newsPublicDateTv = view.news_publication_date_tv!!
     }
 }

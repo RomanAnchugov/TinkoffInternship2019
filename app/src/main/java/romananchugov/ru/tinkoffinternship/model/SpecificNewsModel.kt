@@ -16,4 +16,14 @@ class SpecificNewsModel {
     @ColumnInfo(name = "text")
     @SerializedName("text")
     lateinit var text: String
+
+    @SerializedName("publicationDate")
+    @ColumnInfo(name = "publicationDate")
+    lateinit var publicationDate: PublicationDate
+
+    class PublicationDate {
+
+        @SerializedName("milliseconds")
+        var milliseconds:Long = 0
+    }
 }

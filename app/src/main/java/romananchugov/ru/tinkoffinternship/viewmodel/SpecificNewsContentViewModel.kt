@@ -14,8 +14,13 @@ class SpecificNewsContentViewModel(private val repository: NewsListRepository):V
 
     private lateinit var disposable: Disposable
     var contentModel: MutableLiveData<SpecificNewsContentModel> = MutableLiveData()
+    var error: MutableLiveData<Boolean> = MutableLiveData()
 
     fun onCreate(newsId: Int){
+        loadData(newsId)
+    }
+
+    fun loadData(newsId: Int){
         disposable = repository.getSpecificNewsContentFromApi(newsId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -25,7 +30,9 @@ class SpecificNewsContentViewModel(private val repository: NewsListRepository):V
                     contentModel.value = it
                 },
                 onComplete = { Timber.tag("RX").i("Loaded content") },
-                onError = { Timber.tag("RX").i("Some error occurred, during loading content ${it.message}") }
+                onError = { Timber.tag("RX").i("Some error occurred, during loading content ${it.message}")
+                    error.value = true
+                }
             )
     }
 

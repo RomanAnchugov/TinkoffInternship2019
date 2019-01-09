@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_specific_news.view.*
+import org.jetbrains.anko.design.indefiniteSnackbar
 import romananchugov.ru.tinkoffinternship.MyApplication
 import romananchugov.ru.tinkoffinternship.R
 import romananchugov.ru.tinkoffinternship.utils.Constants
@@ -47,9 +48,15 @@ class SpecificNewsFragment : Fragment() {
             view.specific_news_content_tv.text = Constants.validateHtmlText(it.payload.content)
         })
 
+        viewModel.error.observe(this, Observer {
 
-//        //TODO: UI
-
+            if(it){
+                view.indefiniteSnackbar(R.string.error_snackbar_message, R.string.error_snackbar_action)
+                {
+                    viewModel.loadData(newsId)
+                }
+            }
+        })
 
         //view.indefiniteSnackbar("Id is: $newsId")
 

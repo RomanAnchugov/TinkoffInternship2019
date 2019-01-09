@@ -8,12 +8,12 @@ import romananchugov.ru.tinkoffinternship.R
 
 class MainActivity : AppCompatActivity() {
     /*TODO:
-        0. back button
         1. Styles for views(colors, dimens)
         2. Custom animation for fragment navigation
         3. Store specific news in DB
         4. Work with error
-        5.
+
+        5. README
 
      */
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,8 +24,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         Navigation.findNavController(this, fragment_container.id).popBackStack()
+        hideBackButton()
+        return super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        hideBackButton()
+    }
+
+    private fun hideBackButton(){
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         supportActionBar?.setDisplayShowHomeEnabled(false)
-        return super.onSupportNavigateUp()
     }
 }
